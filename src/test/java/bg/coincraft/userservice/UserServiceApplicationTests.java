@@ -1,4 +1,4 @@
-package bg.coincraft.user_service;
+package bg.coincraft.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
