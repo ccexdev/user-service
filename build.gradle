@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.5'
+	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -10,16 +10,63 @@ java {
 	}
 }
 
+sourceSets {
+	main {
+		java {
+			srcDir "${buildDir}/generated/src/main/java"
+		}
+	}
+}
+
+tasks.named('bootJar') {
+	mainClass = 'bg.coincraft.userservice.UserServiceApplication'
+}
+
+bootJar {
+	enabled = true
+	mainClass = 'bg.coincraft.userservice.UserServiceApplication'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// postgresql
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+buildServerCode {
+	inputSpec = "$projectDir/src/main/resources/openapi.yml".toString()
+	outputDir = "$buildDir/generated".toString()
+	apiPackage = "bg.coincraft.userservice.web"
+	modelPackage = "bg.coincraft.userservice.model"
+
+}
+
+compileJava {
+	dependsOn(tasks.buildServerCode)
 }
