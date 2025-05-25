@@ -30,11 +30,8 @@ components:
       required:
         - username
         - email
-        - active
       properties:
         username:
           type: string
         email:
           type: string
-        active:
-          type: boolean

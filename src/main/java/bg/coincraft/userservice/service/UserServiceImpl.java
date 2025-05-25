@@ -6,6 +6,8 @@ import bg.coincraft.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -17,7 +19,8 @@ public class UserServiceImpl implements UserService {
         UserEntity user = UserEntity.builder()
                 .setUsername(requestDTO.getUsername())
                 .setEmail(requestDTO.getEmail())
-                .setActive(requestDTO.getActive())
+                .setActive(true)
+                .setCreatedAt(LocalDateTime.now())
                 .build();
         return this.userRepository.save(user);
     }
