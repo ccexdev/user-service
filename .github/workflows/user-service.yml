@@ -29,7 +29,7 @@ jobs:
         run: |
           ls -la
           ls -la parent
-          ls -la user-service
+          ls -la services/user-service
 
 #      - name: Build with Gradle Wrapper
 #        run: ./gradlew build
