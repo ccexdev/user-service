@@ -22,10 +22,10 @@ jobs:
       - name: Clone parent repo
         run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} https://github.com/${{ env.PARENT_REPO }} parent
 
-      - name: Copy user-service into parent structure
-        run: |
-          rm -rf parent/services/${{ env.SERVICE_NAME }}
-          cp -r user-service parent/services/${{ env.SERVICE_NAME }}
+#      - name: Copy user-service into parent structure
+#        run: |
+#          rm -rf parent/services/${{ env.SERVICE_NAME }}
+#          cp -r user-service parent/services/${{ env.SERVICE_NAME }}
 
       - name: Show files
         run: |
