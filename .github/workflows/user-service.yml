@@ -20,14 +20,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: parent
 
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
+
       - name: Checkout user-service repository
         uses: actions/checkout@v4
         with:
           path: services/user-service
-
-      - name: Build with Gradle Wrapper
-        run: ./gradlew build
-
 
       - name: Replace user-service code in parent
         run: |
