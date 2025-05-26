@@ -16,6 +16,5 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build with Gradle Wrapper
-        working-directory: ./services/user-service
         run: |
           ../../gradlew build
