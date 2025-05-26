@@ -12,8 +12,16 @@ jobs:
       credentials:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: .
     steps:
       - uses: actions/checkout@v4
+
+      - name: Show current directory and files
+        run: |
+          pwd
+          ls -la
 
       - name: Build with Gradle Wrapper
         run: ./gradlew :services:user-service:build
