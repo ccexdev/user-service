@@ -25,6 +25,10 @@ jobs:
         with:
           path: services/user-service
 
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
+
+
       - name: Replace user-service code in parent
         run: |
           rm -rf parent/services/user-service
@@ -36,8 +40,6 @@ jobs:
           ls -la parent
           ls -la services/user-service
 
-#      - name: Build with Gradle Wrapper
-#        run: ./gradlew build
 
       - name: Build user-service
         run: |
