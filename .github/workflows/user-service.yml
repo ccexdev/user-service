@@ -1,0 +1,19 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ secrets.DOCKERHUB_USERNAME }}/parent:latest
+      credentials:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build with Gradle Wrapper
+        run: ../../gradlew build
