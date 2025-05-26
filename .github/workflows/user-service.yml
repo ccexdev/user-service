@@ -24,4 +24,4 @@ jobs:
           ls -la
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew :services:user-service:build
+        run: ../../gradlew build
