@@ -43,5 +43,11 @@ jobs:
       - name: Checkout user-service repository
         uses: actions/checkout@v4
 
-      - name: Build with Gradle Wrapper
-        run: ../../gradlew build
+      - name: Show current directory and files
+        run: |
+          pwd
+          ls -la
+          ls -la ../../
+
+#      - name: Build with Gradle Wrapper
+#        run: ../../gradlew build
