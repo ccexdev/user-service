@@ -25,6 +25,11 @@ jobs:
         with:
           path: services/user-service
 
+      - name: Replace user-service code in parent
+        run: |
+          rm -rf parent/services/user-service
+          cp -r user-service parent/services/user-service
+
       - name: Show files
         run: |
           ls -la
