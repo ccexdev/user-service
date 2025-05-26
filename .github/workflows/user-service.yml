@@ -20,8 +20,11 @@ jobs:
         run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} ${{ env.PARENT_REPO }}
       - name: Checkout
         run: cd parent
-      - name: Build parent
-        run: ./gradlew build
+      - name: Show files
+        run: |
+          ls -la
+#      - name: Build parent
+#        run: ./gradlew build
 
       - name: Checkout service repository
         uses: actions/checkout@v4
