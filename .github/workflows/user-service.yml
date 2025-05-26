@@ -5,7 +5,7 @@ on:
     branches: ['main']
 
 env:
-  PARENT_REPO: https://github.com/ccexdev/parent.git
+  PARENT_REPO: ccexdev/parent
   PARENT_BRANCH: main
   SERVICE_NAME: user-service
 
@@ -14,40 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        run: cd ..
-      - name: Show files
-        run: |
-          ls -la
-      - name: Clone parent repo
-        run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} ${{ env.PARENT_REPO }}
-      - name: Show files
-        run: |
-          ls -la
-      - name: Checkout
-        run: cd parent
-      - name: Show files
-        run: |
-          ls -la
-#      - name: Build parent
-#        run: ./gradlew build
-
-      - name: Checkout service repository
+      - name: Checkout user-service repository
         uses: actions/checkout@v4
-#      - name: Copy service into parent modules
-#        run: |
-#          rm -rf parent/services/${{ env.SERVICE_NAME }}
-#          cp -r service parent/services/${{ env.SERVICE_NAME }}
+        with:
+          path: user-service
 
-#      - name: Show files
-#        run: |
-#          ls -la parent/services/${{ env.SERVICE_NAME }}
+      - name: Clone parent repo
+        run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} https://github.com/${{ env.PARENT_REPO }} parent
+
+      - name: Copy user-service into parent structure
+        run: |
+          rm -rf parent/services/${{ env.SERVICE_NAME }}
+          cp -r user-service parent/services/${{ env.SERVICE_NAME }}
 
       - name: Show files
         run: |
           ls -la
 
-      - name: Build service (with/without tests)
+      - name: Build user-service
         run: |
           cd parent
           ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
