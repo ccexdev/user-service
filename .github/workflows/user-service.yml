@@ -40,5 +40,8 @@ jobs:
       - name: Go to user-service dir
         run: cd services/user-service
 
+      - name: Checkout user-service repository
+        uses: actions/checkout@v4
+
       - name: Build with Gradle Wrapper
         run: ../../gradlew build
