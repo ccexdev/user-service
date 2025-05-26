@@ -42,7 +42,7 @@ public class UserDelegateTest extends IntegrationTestInit {
 
     private UserEntity expectedUserEntity() {
         return UserEntity.builder()
-                .setUsername("test")
+                .setUsername("test1")
                 .setEmail("test@test.com")
                 .setActive(true)
                 .build();
