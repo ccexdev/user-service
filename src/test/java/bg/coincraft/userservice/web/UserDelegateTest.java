@@ -37,7 +37,7 @@ public class UserDelegateTest {
 
     private UserEntity createUserEntity() {
         return UserEntity.builder()
-                .setUsername("test1")
+                .setUsername("test")
                 .setEmail("test@test.com")
                 .setActive(true)
                 .build();
