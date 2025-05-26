@@ -25,14 +25,17 @@ jobs:
           ls -la
           ls -la ../../
 
-      - name: Build with Gradle Wrapper 1
+      - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      - name: Show current directory and files 2
+      - name: Show current directory and files
         run: |
           pwd
           ls -la
           ls -la ../../
+
+      - name: List user-service sources
+        run: ls -laR services/user-service/src
 
       - name: Build with Gradle Wrapper
         run: ./gradlew :services:user-service:build
