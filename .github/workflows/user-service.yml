@@ -28,6 +28,11 @@ jobs:
           rm -rf parent/services/${{ env.SERVICE_NAME }}
           cp -r user-service parent/services/${{ env.SERVICE_NAME }}
 
+      - name: Docker Info
+        run: |
+          docker info
+          docker ps -a
+
       - name: Build user-service
         run: |
           cd parent
