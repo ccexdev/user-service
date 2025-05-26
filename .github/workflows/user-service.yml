@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ['main']
+
+env:
+  PARENT_REPO: ccexdev/parent
+  PARENT_BRANCH: main
+  SERVICE_NAME: user-service
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout user-service repository
+        uses: actions/checkout@v4
+        with:
+          path: user-service
+
+      - name: Clone parent repo
+        run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} https://github.com/${{ env.PARENT_REPO }} parent
+
+      - name: Copy user-service into parent structure
+        run: |
+          mkdir -p parent/services
+          rm -rf parent/services/${{ env.SERVICE_NAME }}
+          cp -r user-service parent/services/${{ env.SERVICE_NAME }}
+
+      - name: Build user-service
+        run: |
+          cd parent
+          ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
