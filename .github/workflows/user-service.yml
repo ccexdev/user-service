@@ -22,4 +22,4 @@ jobs:
 
       - name: Build with Gradle Wrapper
         working-directory: /app
-        run: ./gradlew :services:user-service:build
+        run: ./gradlew :services:user-service:build -x buildServerCode
