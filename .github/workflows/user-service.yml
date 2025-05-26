@@ -16,23 +16,25 @@ jobs:
       - name: Checkout parent repository
         uses: actions/checkout@v4
         with:
-          repository: ccexdev/user-service
+          repository: ccexdev/parent
           token: ${{ secrets.GITHUB_TOKEN }}
+          path: parent
 
-      - name: Show current directory and files
+      - name: Checkout user-service repository
+        uses: actions/checkout@v4
+        with:
+          path: services/user-service
+
+      - name: Show files
         run: |
-          pwd
           ls -la
-          ls -la ../../
+          ls -la parent
+          ls -la user-service
 
-      - name: Build with Gradle Wrapper
-        run: ./gradlew build
+#      - name: Build with Gradle Wrapper
+#        run: ./gradlew build
 
-      - name: Show current directory and files
+      - name: Build user-service
         run: |
-          pwd
-          ls -la
-          ls -la ../../
-
-      - name: Build with Gradle Wrapper
-        run: ./gradlew :services:user-service:build
+          cd parent
+          ./gradlew :services:user-service:build
