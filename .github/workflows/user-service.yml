@@ -13,6 +13,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
+      - name: Checkout parent repository
+        uses: actions/checkout@v4
+        with:
+          repository: ccexdev/parent
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Show current directory and files
         run: |
           pwd
