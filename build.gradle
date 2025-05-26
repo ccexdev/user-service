@@ -10,13 +10,15 @@ java {
 	}
 }
 
-sourceSets {
-	main {
-		java {
-			srcDir "${buildDir}/generated/src/main/java"
-		}
-	}
-}
+//sourceSets {
+//	main {
+//		java {
+//			srcDir "${buildDir}/generated/src/main/java"
+//		}
+//	}
+//}
+
+sourceSets.main.java.srcDir "${buildDir}/generated/src/main/java"
 
 tasks.named('bootJar') {
 	mainClass = 'bg.coincraft.userservice.UserServiceApplication'
