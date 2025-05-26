@@ -23,10 +23,6 @@ public class IntegrationTestInit {
                     .withUsername("test_user")
                     .withPassword("test_password");
 
-    static {
-        POSTGRES_CONTAINER.start();
-    }
-
     @DynamicPropertySource
     private static void registerPgProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES_CONTAINER::getJdbcUrl);

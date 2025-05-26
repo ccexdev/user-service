@@ -28,10 +28,14 @@ jobs:
           rm -rf parent/services/${{ env.SERVICE_NAME }}
           cp -r user-service parent/services/${{ env.SERVICE_NAME }}
 
-      - name: Docker Info
-        run: |
-          docker info
-          docker ps -a
+      - name: Enable Testcontainers debug logs
+        run: echo "logging.level.org.testcontainers=DEBUG" >> parent/services/user-service/src/test/resources/application.properties
+
+      - name: Print Testcontainers env
+        run: env | grep -i testcontainers || true
+
+      - name: Disable Ryuk for Testcontainers (DEBUG ONLY)
+        run: echo "TESTCONTAINERS_RYUK_DISABLED=true" >> $GITHUB_ENV
 
       - name: Build user-service
         run: |
