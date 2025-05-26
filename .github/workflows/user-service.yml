@@ -8,7 +8,6 @@ env:
   PARENT_REPO: ccexdev/parent
   PARENT_BRANCH: main
   SERVICE_NAME: user-service
-  TESTCONTAINER_DOCKER_NETWORK: tomodachi-testcontainers
 
 jobs:
   build:
@@ -28,9 +27,6 @@ jobs:
           mkdir -p parent/services
           rm -rf parent/services/${{ env.SERVICE_NAME }}
           cp -r user-service parent/services/${{ env.SERVICE_NAME }}
-
-      - name: Create Docker network for running Testcontainers
-        run: docker network create ${{ env.TESTCONTAINER_DOCKER_NETWORK }}
 
       - name: Build user-service
         run: |
