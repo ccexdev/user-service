@@ -4,43 +4,39 @@ on:
   pull_request:
     branches: ['main']
 
+env:
+  PARENT_REPO: ccexdev/parent
+  PARENT_BRANCH: main
+  SERVICE_NAME: user-service
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: gebozhinov/parent:latest
-      credentials:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
     steps:
       - name: Checkout parent repository
         uses: actions/checkout@v4
         with:
-          repository: ccexdev/parent
+          repository: ${{ env.PARENT_REPO }}
+          ref: ${{ env.PARENT_BRANCH }}
           token: ${{ secrets.GITHUB_TOKEN }}
           path: parent
 
-      - name: Build with Gradle Wrapper
-        run: ./gradlew build
-
-      - name: Checkout user-service repository
+      - name: Checkout service repository
         uses: actions/checkout@v4
         with:
-          path: services/user-service
+          path: service
 
-      - name: Replace user-service code in parent
+      - name: Copy service into parent modules
         run: |
-          rm -rf parent/services/user-service
-          cp -r user-service parent/services/user-service
+          rm -rf parent/services/${{ env.SERVICE_NAME }}
+          cp -r service parent/services/${{ env.SERVICE_NAME }}
 
       - name: Show files
         run: |
-          ls -la
-          ls -la parent
-          ls -la services/user-service
+          ls -la parent/services/${{ env.SERVICE_NAME }}
 
-
-      - name: Build user-service
+      - name: Build service (with/without tests)
         run: |
           cd parent
-          ./gradlew :services:user-service:build
+          ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
