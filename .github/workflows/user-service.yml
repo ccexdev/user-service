@@ -16,8 +16,14 @@ jobs:
     steps:
       - name: Checkout
         run: cd ..
+      - name: Show files
+        run: |
+          ls -la
       - name: Clone parent repo
         run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} ${{ env.PARENT_REPO }}
+      - name: Show files
+        run: |
+          ls -la
       - name: Checkout
         run: cd parent
       - name: Show files
