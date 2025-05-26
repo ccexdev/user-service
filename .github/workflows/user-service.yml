@@ -28,10 +28,6 @@ jobs:
           rm -rf parent/services/${{ env.SERVICE_NAME }}
           cp -r user-service parent/services/${{ env.SERVICE_NAME }}
 
-      - name: Show files
-        run: |
-          ls -la
-
       - name: Build user-service
         run: |
           cd parent
