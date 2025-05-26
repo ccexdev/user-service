@@ -14,21 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout user-service repository
+      - name: Checkout ${{ env.SERVICE_NAME }} repository
         uses: actions/checkout@v4
         with:
-          path: user-service
+          path: ${{ env.SERVICE_NAME }}
 
       - name: Clone parent repo
         run: git clone --single-branch --branch ${{ env.PARENT_BRANCH }} https://github.com/${{ env.PARENT_REPO }} parent
 
-      - name: Copy user-service into parent structure
+      - name: Copy ${{ env.SERVICE_NAME }} into parent structure
         run: |
           mkdir -p parent/services
           rm -rf parent/services/${{ env.SERVICE_NAME }}
-          cp -r user-service parent/services/${{ env.SERVICE_NAME }}
+          cp -r ${{ env.SERVICE_NAME }} parent/services/${{ env.SERVICE_NAME }}
 
-      - name: Build user-service
+      - name: Build ${{ env.SERVICE_NAME }}
         run: |
           cd parent
           ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
