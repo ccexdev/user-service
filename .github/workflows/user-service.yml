@@ -34,8 +34,11 @@ jobs:
           ls -la
           ls -la ../../
 
-      - name: List user-service sources
-        run: ls -laR services/user-service/src
+#      - name: List user-service sources
+#        run: ls -laR services/user-service/src
+
+      - name: Go to user-service dir
+        run: cd services/user-service
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew :services:user-service:build
+        run: ../../gradlew build
