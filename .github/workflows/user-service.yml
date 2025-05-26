@@ -14,9 +14,9 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+        with:
+          path: /app
 
       - name: Build with Gradle Wrapper
+        working-directory: /app
         run: ./gradlew :services:user-service:build
