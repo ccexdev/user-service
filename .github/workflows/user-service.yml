@@ -15,11 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy files to /app
+      - name: Show current directory and files
         run: |
-          mkdir -p /app
-          cp -r . /app/
+          pwd
+          ls -la
+          ls -la ../../
 
       - name: Build with Gradle Wrapper
-        working-directory: /app
-        run: ./gradlew :services:user-service:build -x buildServerCode
+        run: ./gradlew :services:user-service:build
