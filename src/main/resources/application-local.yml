@@ -3,6 +3,9 @@ server:
   servlet:
     context-path: /
 spring:
+  config:
+    activate:
+      on-profile: local
   application:
     name: userservice
   jpa:
@@ -11,9 +14,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/user_service
+    username: admin
+    password: admin
     driverClassName: org.postgresql.Driver
   sql:
     init:
