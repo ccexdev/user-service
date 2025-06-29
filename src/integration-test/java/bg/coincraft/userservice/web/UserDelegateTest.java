@@ -1,7 +1,7 @@
 package bg.coincraft.userservice.web;
 
 import bg.coincraft.userservice.IntegrationTestInit;
-import bg.coincraft.userservice.model.UserRequestDTO;
+import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ public class UserDelegateTest extends IntegrationTestInit {
             """)
     public void test1() {
         UserEntity expectedUserEntity = expectedUserEntity();
-        userDelegate.createUser(UserRequestDTO.builder()
+        userDelegate.register(CreateUserDTO.builder()
                         .setUsername("test")
                         .setEmail("test@test.com")
                 .build());

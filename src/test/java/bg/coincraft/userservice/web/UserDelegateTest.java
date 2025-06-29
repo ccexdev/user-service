@@ -1,6 +1,6 @@
 package bg.coincraft.userservice.web;
 
-import bg.coincraft.userservice.model.UserRequestDTO;
+import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import bg.coincraft.userservice.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class UserDelegateTest {
                         .setActive(true)
                         .build());
 
-        UserEntity actualUserEntity = userService.create(UserRequestDTO.builder().build());
+        UserEntity actualUserEntity = userService.create(CreateUserDTO.builder().build());
 
         assertThat(actualUserEntity)
                 .usingRecursiveComparison()
