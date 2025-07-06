@@ -1,6 +1,6 @@
 package bg.coincraft.userservice.service;
 
-import bg.coincraft.userservice.model.UserRequestDTO;
+import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import bg.coincraft.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +15,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserEntity create(UserRequestDTO requestDTO) {
+    public UserEntity create(CreateUserDTO createUserDTO) {
         UserEntity user = UserEntity.builder()
-                .setUsername(requestDTO.getUsername())
-                .setEmail(requestDTO.getEmail())
+                .setUsername(createUserDTO.getUsername())
+                .setEmail(createUserDTO.getEmail())
                 .setActive(true)
                 .setCreatedAt(LocalDateTime.now())
                 .build();

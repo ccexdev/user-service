@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: user-service
+  description: User Service
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+    description: Development server
+paths:
+  /api/users:
+    $ref: 'endpoint/CreateUser.yml'

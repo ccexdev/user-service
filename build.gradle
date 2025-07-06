@@ -56,7 +56,7 @@ tasks.named('test') {
 }
 
 buildServerCode {
-	inputSpec = "$projectDir/src/main/resources/openapi.yml".toString()
+	inputSpec = "$projectDir/src/main/resources/openapi/openapi.yml".toString()
 	outputDir = "$buildDir/generated".toString()
 	apiPackage = "bg.coincraft.userservice.web"
 	modelPackage = "bg.coincraft.userservice.model"

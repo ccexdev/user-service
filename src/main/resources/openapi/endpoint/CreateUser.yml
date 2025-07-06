@@ -1,0 +1,14 @@
+post:
+  tags:
+    - User
+  operationId: register
+  summary: Create user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CreateUser.yml'
+  responses:
+    200:
+      description: User created successfully
