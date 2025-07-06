@@ -8,22 +8,4 @@ servers:
     description: Development server
 paths:
   /api/users:
-    post:
-      tags:
-        - User
-      operationId: register
-      summary: Create user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUser'
-      responses:
-        200:
-          description: User created successfully
-
-components:
-  schemas:
-    CreateUser:
-      $ref: 'schemas/CreateUser.yml'
+    $ref: 'endpoint/CreateUser.yml'

@@ -1,10 +1,4 @@
 type: object
-required:
-  - username
-  - email
-  - firstName
-  - lastName
-  - address
 properties:
   username:
     type: string

@@ -1,9 +1,4 @@
 type: object
-required:
-  - country
-  - city
-  - streetName
-  - zipCode
 properties:
   country:
     type: string
