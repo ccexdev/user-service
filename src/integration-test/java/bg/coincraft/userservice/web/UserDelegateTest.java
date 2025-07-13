@@ -26,6 +26,7 @@ public class UserDelegateTest extends IntegrationTestInit {
         UserEntity expectedUserEntity = expectedUserEntity();
         userDelegate.register(CreateUserDTO.builder()
                         .setUsername("test")
+                        .setPassword("123456")
                         .setEmail("test@test.com")
                 .build());
 
@@ -35,6 +36,7 @@ public class UserDelegateTest extends IntegrationTestInit {
                 .usingRecursiveComparison()
                 .ignoringFields(
                         "id",
+                        "password",
                         "createdAt",
                         "lastLoginAt")
                 .isEqualTo(expectedUserEntity);

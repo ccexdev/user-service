@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordService passwordService;
 
     @Override
     public UserEntity create(CreateUserDTO createUserDTO) {
         UserEntity user = UserEntity.builder()
                 .setUsername(createUserDTO.getUsername())
+                .setPassword(passwordService.encrypt(createUserDTO.getPassword()))
                 .setEmail(createUserDTO.getEmail())
                 .setActive(true)
                 .setCreatedAt(LocalDateTime.now())
