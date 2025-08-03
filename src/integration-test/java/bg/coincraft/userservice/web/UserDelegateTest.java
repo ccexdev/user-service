@@ -26,7 +26,7 @@ public class UserDelegateTest extends IntegrationTestInit {
         UserEntity expectedUserEntity = expectedUserEntity();
         userDelegate.register(CreateUserDTO.builder()
                         .setUsername("test")
-                        .setPassword("123456")
+                        .setPassword("123456ASDqwe22qqdc")
                         .setEmail("test@test.com")
                 .build());
 
@@ -53,7 +53,7 @@ public class UserDelegateTest extends IntegrationTestInit {
     private UserEntity getUser(String username) {
         return entityManager.createQuery("""
                                 SELECT u
-                                FROM UserEntity u 
+                                FROM UserEntity u
                                 WHERE u.username = :username
                                 """, UserEntity.class)
                 .setParameter("username", username)

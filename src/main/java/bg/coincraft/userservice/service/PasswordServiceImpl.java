@@ -16,7 +16,7 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public String decrypt(String password) {
-        return "";
+    public boolean matches(String password) {
+        return passwordEncoder.matches(password, passwordEncoder.encode(password));
     }
 }
