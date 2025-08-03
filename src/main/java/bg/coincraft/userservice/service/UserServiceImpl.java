@@ -3,6 +3,7 @@ package bg.coincraft.userservice.service;
 import bg.coincraft.userservice.exception.ConstraintViolationException;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
+import bg.coincraft.userservice.model.enums.UserRole;
 import bg.coincraft.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
                 .setEmail(createUserDTO.getEmail())
                 .setActive(true)
                 .setCreatedAt(LocalDateTime.now())
+                .setRole(UserRole.USER)
                 .build();
         return this.userRepository.save(user);
     }

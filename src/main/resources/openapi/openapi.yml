@@ -9,3 +9,5 @@ servers:
 paths:
   /api/user-service/register:
     $ref: 'endpoint/CreateUser.yml'
+  /api/user-service/login:
+    $ref: 'endpoint/LoginUser.yml'

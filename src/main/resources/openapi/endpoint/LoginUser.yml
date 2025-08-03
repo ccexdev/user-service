@@ -1,0 +1,14 @@
+post:
+  tags:
+    - User
+  operationId: login
+  summary: Login user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/LoginUser.yml'
+  responses:
+    200:
+      description: User login successful
