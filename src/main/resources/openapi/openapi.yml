@@ -7,7 +7,7 @@ servers:
   - url: http://localhost:8081
     description: Development server
 paths:
-  /api/user-service/register:
+  /api/v1/user-service/public/register:
     $ref: 'endpoint/CreateUser.yml'
-  /api/user-service/login:
+  /api/v1/user-service/public/login:
     $ref: 'endpoint/LoginUser.yml'
