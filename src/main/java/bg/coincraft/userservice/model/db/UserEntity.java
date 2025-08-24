@@ -27,7 +27,13 @@ public class UserEntity {
     private String username;
 
     @Column(nullable = false)
-    private String password;
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String keycloakId;
 
     @Column(unique = true, nullable = false)
     private String email;
