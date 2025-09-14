@@ -34,7 +34,7 @@ jobs:
           ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
 
       - name: Upload parent folder as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: parent-folder
           path: parent
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download parent folder artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: parent-folder
           path: parent
