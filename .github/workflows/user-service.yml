@@ -52,11 +52,8 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }} -f parent/Dockerfile parent
-        with:
-          build-args: |
-            SERVICE_NAME=${{ env.SERVICE_NAME }}
-
+          docker build --build-arg SERVICE_NAME=${{ env.SERVICE_NAME }} -t ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }} -f parent/Dockerfile parent
+          
       - name: Tag the Docker image as 'latest'
         run: |
           docker tag ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }} ${{ secrets.ECR_REPOSITORY }}:latest
