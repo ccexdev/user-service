@@ -33,22 +33,6 @@ jobs:
           cd parent
           ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
 
-      - name: Upload parent folder as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: parent-folder
-          path: parent
-
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download parent folder artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: parent-folder
-          path: parent
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -63,20 +47,19 @@ jobs:
       - name: Get short SHA
         id: vars
         run: |
-          cd parent
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Build the Docker image
         run: |
-          docker build -t ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }} -f parent/Dockerfile parent
+          docker build -t ${{ secrets.ECR_REPOSITORY }}:${SHORT_SHA} -f parent/Dockerfile parent
 
       - name: Tag the Docker image as 'latest'
         run: |
-          docker tag ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }} ${{ secrets.ECR_REPOSITORY }}:latest
+          docker tag ${{ secrets.ECR_REPOSITORY }}:${SHORT_SHA} ${{ secrets.ECR_REPOSITORY }}:latest
 
       - name: Push to Amazon ECR
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
+          docker push ${{ secrets.ECR_REPOSITORY }}:${SHORT_SHA}
           docker push ${{ secrets.ECR_REPOSITORY }}:latest
 
 #  deploy:
