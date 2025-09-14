@@ -33,10 +33,22 @@ jobs:
           cd parent
           ./gradlew :services:${{ env.SERVICE_NAME }}:clean :services:${{ env.SERVICE_NAME }}:build
 
+      - name: Upload parent folder as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: parent-folder
+          path: parent
+
   push:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download parent folder artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: parent-folder
+          path: parent
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
