@@ -63,7 +63,7 @@ jobs:
       - name: Get short SHA
         id: vars
         run: |
-          cd parent
+          cd parent/services/${{ env.SERVICE_NAME }}
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Build the Docker image
