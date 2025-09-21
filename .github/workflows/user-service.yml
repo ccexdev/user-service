@@ -74,37 +74,37 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Download ECS task definition
-        run: |
-          aws ecs describe-task-definition \
-              --task-definition ${{ secrets.ECS_TASK_DEFINITION_FAMILY }} \
-              --query taskDefinition \
-              > task-definition.json
-
-      - name: Update image in ECS task definition
-        id: render-task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: user-service
-          image: ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
-
-      - name: Clean task definition JSON
-        run: |
-          sudo apt-get update && sudo apt-get install -y jq
-          jq 'del(
-            .taskDefinitionArn,
-            .revision,
-            .status,
-            .requiresAttributes,
-            .compatibilities,
-            .registeredAt,
-            .registeredBy,
-            .tags
-          )' task-definition.json > task-definition-clean.json
-
-      - name: Register new task definition and deploy to ECS
-        id: deploy-step
-        run: |
-          new_task_def_arn=$(aws ecs register-task-definition --cli-input-json file://task-definition-clean.json --query 'taskDefinition.taskDefinitionArn' --output text)
-          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --task-definition $new_task_def_arn
+#      - name: Download ECS task definition
+#        run: |
+#          aws ecs describe-task-definition \
+#              --task-definition ${{ secrets.ECS_TASK_DEFINITION_FAMILY }} \
+#              --query taskDefinition \
+#              > task-definition.json
+#
+#      - name: Update image in ECS task definition
+#        id: render-task-def
+#        uses: aws-actions/amazon-ecs-render-task-definition@v1
+#        with:
+#          task-definition: task-definition.json
+#          container-name: user-service
+#          image: ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
+#
+#      - name: Clean task definition JSON
+#        run: |
+#          sudo apt-get update && sudo apt-get install -y jq
+#          jq 'del(
+#            .taskDefinitionArn,
+#            .revision,
+#            .status,
+#            .requiresAttributes,
+#            .compatibilities,
+#            .registeredAt,
+#            .registeredBy,
+#            .tags
+#          )' task-definition.json > task-definition-clean.json
+#
+#      - name: Register new task definition and deploy to ECS
+#        id: deploy-step
+#        run: |
+#          new_task_def_arn=$(aws ecs register-task-definition --cli-input-json file://task-definition-clean.json --query 'taskDefinition.taskDefinitionArn' --output text)
+#          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --task-definition $new_task_def_arn
