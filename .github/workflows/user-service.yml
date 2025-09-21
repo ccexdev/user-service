@@ -63,36 +63,36 @@ jobs:
           docker push ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
           docker push ${{ secrets.ECR_REPOSITORY }}:latest
 
-#  deploy:
-#    needs: push
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v4
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ${{ secrets.AWS_REGION }}
-#
-#      - name: Download ECS task definition
-#        run: |
-#          aws ecs describe-task-definition \
-#              --task-definition ${{ secrets.ECS_TASK_DEFINITION_FAMILY }} \
-#              --query taskDefinition \
-#              > task-definition.json
-#
-#      - name: Update image in ECS task definition
-#        id: render-task-def
-#        uses: aws-actions/amazon-ecs-render-task-definition@v1
-#        with:
-#          task-definition: task-definition.json
-#          container-name: user-service
-#          image: ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
-#
-#      - name: Deploy to ECS
-#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-#        with:
-#          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
-#          service: ${{ secrets.ECS_SERVICE_NAME }}
-#          cluster: ${{ secrets.ECS_CLUSTER_NAME }}
-#          wait-for-service-stability: true
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Download ECS task definition
+        run: |
+          aws ecs describe-task-definition \
+              --task-definition ${{ secrets.ECS_TASK_DEFINITION_FAMILY }} \
+              --query taskDefinition \
+              > task-definition.json
+
+      - name: Update image in ECS task definition
+        id: render-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: user-service
+          image: ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
+
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
+          service: ${{ secrets.ECS_SERVICE_NAME }}
+          cluster: ${{ secrets.ECS_CLUSTER_NAME }}
+          wait-for-service-stability: true
