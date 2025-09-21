@@ -89,14 +89,22 @@ jobs:
           container-name: user-service
           image: ${{ secrets.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
 
-      - name: Clean task definition
+      - name: Clean task definition JSON
         run: |
-          sudo apt-get update && sudo apt-get install -y jq   # Install jq if needed
-          jq 'del(.enableFaultInjection)' task-definition.json > task-definition-clean.json
+          sudo apt-get update && sudo apt-get install -y jq
+          jq 'del(
+            .taskDefinitionArn,
+            .revision,
+            .status,
+            .requiresAttributes,
+            .compatibilities,
+            .registeredAt,
+            .registeredBy,
+            .tags
+          )' task-definition.json > task-definition-clean.json
 
       - name: Register new task definition and deploy to ECS
         id: deploy-step
         run: |
           new_task_def_arn=$(aws ecs register-task-definition --cli-input-json file://task-definition-clean.json --query 'taskDefinition.taskDefinitionArn' --output text)
-          echo "::set-output name=new-task-def::$new_task_def_arn"
           aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --task-definition $new_task_def_arn
