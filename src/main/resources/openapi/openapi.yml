@@ -7,6 +7,11 @@ servers:
   - url: http://localhost:8081
     description: Development server
 paths:
+  /:
+    get:
+      responses:
+        200:
+          description: OK
   /api/v1/user-service/public/register:
     $ref: 'endpoint/CreateUser.yml'
   /api/v1/user-service/public/token:
