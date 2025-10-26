@@ -7,6 +7,7 @@ import bg.coincraft.userservice.model.TokenResponseDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import bg.coincraft.userservice.model.enums.UserRole;
 import bg.coincraft.userservice.repository.UserRepository;
+import bg.coincraft.userservice.service.keycloak.KeycloakService;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
