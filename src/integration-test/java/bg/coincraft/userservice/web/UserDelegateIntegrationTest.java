@@ -3,9 +3,9 @@ package bg.coincraft.userservice.web;
 import bg.coincraft.userservice.IntegrationTestInit;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
+import bg.coincraft.userservice.model.enums.UserRole;
 import bg.coincraft.userservice.service.KeycloakService;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
     @MockitoBean
     private KeycloakService keycloakService;
 
-    @Disabled
     @Test
     @DisplayName("""
             WHEN:
@@ -34,6 +33,8 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
         when(keycloakService.create(any())).thenReturn("keycloak-123");
         UserEntity expectedUserEntity = expectedUserEntity();
         userDelegate.register(CreateUserDTO.builder()
+                        .setFirstName("Test")
+                        .setLastName("Testov")
                         .setUsername("test")
                         .setPassword("123456ASDqwe22qqdc")
                         .setEmail("test@test.com")
@@ -53,8 +54,12 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
 
     private UserEntity expectedUserEntity() {
         return UserEntity.builder()
+                .setFirstName("Test")
+                .setLastName("Testov")
                 .setUsername("test")
                 .setEmail("test@test.com")
+                .setKeycloakId("keycloak-123")
+                .setRole(UserRole.USER)
                 .setActive(true)
                 .build();
     }
