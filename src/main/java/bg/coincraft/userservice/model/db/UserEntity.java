@@ -1,5 +1,7 @@
 package bg.coincraft.userservice.model.db;
 
+import bg.coincraft.userservice.model.enums.UserRole;
+import bg.coincraft.userservice.model.enums.converter.UserRoleConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +26,15 @@ public class UserEntity {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String keycloakId;
+
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -35,4 +46,8 @@ public class UserEntity {
 
     @Column
     private LocalDateTime lastLoginAt;
+
+    @Column
+    @Convert(converter = UserRoleConverter.class)
+    private UserRole role;
 }

@@ -2,6 +2,8 @@ type: object
 properties:
   username:
     type: string
+  password:
+    type: string
   email:
     type: string
   firstName:

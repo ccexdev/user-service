@@ -12,7 +12,7 @@ spring:
     database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
     url: jdbc:postgresql://localhost:5432/user_service
     username: admin
@@ -22,8 +22,25 @@ spring:
     init:
       mode: always
       encoding: utf-8
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8080/realms/local
 logging:
   level:
     org:
       hibernate:
         SQL: debug
+      springframework:
+        security: trace
+
+keycloak:
+  server-url: http://localhost:8080
+  realm: master
+  user-realm: local-realm
+  grant-type: password
+  client-id: admin-cli
+  user-client-id: local-client
+  username: admin
+  password: admin
