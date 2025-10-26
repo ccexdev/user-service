@@ -25,7 +25,7 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
     @MockitoBean
     private KeycloakService keycloakService;
 
-    @Disabled
+//    @Disabled
     @Test
     @DisplayName("""
             WHEN:
