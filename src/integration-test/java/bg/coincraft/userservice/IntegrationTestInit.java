@@ -4,6 +4,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -25,10 +26,19 @@ public class IntegrationTestInit {
                     .withUsername("test_user")
                     .withPassword("test_password");
 
+    @Container
+    protected static final GenericContainer<?> KEYCLOAK
+            = new GenericContainer<>("quay.io/keycloak/keycloak:24.0.0")
+            .withExposedPorts(8080)
+            .withEnv("KEYCLOAK_ADMIN", "admin")
+            .withEnv("KEYCLOAK_ADMIN_PASSWORD", "admin")
+            .withCommand("start-dev");
+
     @DynamicPropertySource
     private static void registerPgProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES_CONTAINER::getUsername);
         registry.add("spring.datasource.password", POSTGRES_CONTAINER::getPassword);
+        registry.add("keycloak.server-url", () -> "http://" + KEYCLOAK.getHost() + ":" + KEYCLOAK.getMappedPort(8080));
     }
 }
