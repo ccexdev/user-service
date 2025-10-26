@@ -4,6 +4,7 @@ spring:
       on-profile: test
 
 keycloak:
+  enabled: false
   server-url: http://localhost:8080
   realm: master
   user-realm: local-realm
