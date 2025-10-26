@@ -4,11 +4,13 @@ import bg.coincraft.userservice.IntegrationTestInit;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import bg.coincraft.userservice.model.enums.UserRole;
-import bg.coincraft.userservice.service.KeycloakService;
+import bg.coincraft.userservice.service.keycloak.KeycloakService;
+import bg.coincraft.userservice.service.keycloak.KeycloakUserService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +25,10 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
     private EntityManager entityManager;
     @MockitoBean
     private KeycloakService keycloakService;
+    @MockitoBean
+    private KeycloakUserService keycloakUserService;
+    @MockitoBean
+    private JwtDecoder jwtDecoder;
 
     @Test
     @DisplayName("""

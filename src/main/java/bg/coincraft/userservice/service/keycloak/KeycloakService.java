@@ -1,4 +1,4 @@
-package bg.coincraft.userservice.service;
+package bg.coincraft.userservice.service.keycloak;
 
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.LoginUserDTO;
