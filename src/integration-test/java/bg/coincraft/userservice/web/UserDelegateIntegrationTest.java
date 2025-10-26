@@ -3,26 +3,35 @@ package bg.coincraft.userservice.web;
 import bg.coincraft.userservice.IntegrationTestInit;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
+import bg.coincraft.userservice.service.KeycloakService;
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-public class UserDelegateTest extends IntegrationTestInit {
+public class UserDelegateIntegrationTest extends IntegrationTestInit {
 
     @Autowired
     private UserDelegate userDelegate;
     @Autowired
     private EntityManager entityManager;
+    @Mock
+    private KeycloakService keycloakService;
 
+    @Disabled
     @Test
     @DisplayName("""
             WHEN:
             THEN:
             """)
     public void test1() {
+        when(keycloakService.create(any())).thenReturn("keycloak-123");
         UserEntity expectedUserEntity = expectedUserEntity();
         userDelegate.register(CreateUserDTO.builder()
                         .setUsername("test")

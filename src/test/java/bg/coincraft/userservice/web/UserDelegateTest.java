@@ -15,10 +15,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserDelegateTest {
 
-    @Mock
-    private UserService userService;
-    @Test
-    void test1() {
+//    @Mock
+//    private UserService userService;
+//    @Test
+//    void test1() {
 //        UserEntity expectedUserEntity = createUserEntity();
 //        when(userService.create(any()))
 //                .thenReturn(UserEntity.builder()
@@ -33,7 +33,7 @@ public class UserDelegateTest {
 //                .usingRecursiveComparison()
 //                .ignoringFields("id", "createdAt", "lastLoginAt")
 //                .isEqualTo(expectedUserEntity);
-    }
+//    }
 
     private UserEntity createUserEntity() {
         return UserEntity.builder()
