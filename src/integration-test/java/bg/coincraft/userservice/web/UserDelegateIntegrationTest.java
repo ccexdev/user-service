@@ -4,11 +4,10 @@ import bg.coincraft.userservice.IntegrationTestInit;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
 import bg.coincraft.userservice.model.enums.UserRole;
-import bg.coincraft.userservice.service.keycloak.KeycloakService;
-import bg.coincraft.userservice.service.keycloak.KeycloakUserService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openapitools.client.api.AuthenticationApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -24,19 +23,17 @@ public class UserDelegateIntegrationTest extends IntegrationTestInit {
     @Autowired
     private EntityManager entityManager;
     @MockitoBean
-    private KeycloakService keycloakService;
-    @MockitoBean
-    private KeycloakUserService keycloakUserService;
+    private AuthenticationApi authenticationApi;
     @MockitoBean
     private JwtDecoder jwtDecoder;
 
     @Test
     @DisplayName("""
-            WHEN:
-            THEN:
+            WHEN: User is trying to register
+            THEN: User should be registered and should be saved to the database
             """)
     public void test1() {
-        when(keycloakService.create(any())).thenReturn("keycloak-123");
+        when(authenticationApi.register(any())).thenReturn("keycloak-123");
         UserEntity expectedUserEntity = expectedUserEntity();
         userDelegate.register(CreateUserDTO.builder()
                         .setFirstName("Test")
