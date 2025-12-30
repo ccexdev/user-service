@@ -3,13 +3,6 @@ spring:
     activate:
       on-profile: test
 
-keycloak:
-  enabled: false
-  server-url: http://localhost:8080
-  realm: master
-  user-realm: local-realm
-  grant-type: password
-  client-id: admin-cli
-  user-client-id: local-client
-  username: admin
-  password: admin
+services:
+  authentication:
+    url: http://localhost:8082

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefaultDelegate implements DefaultApiDelegate {
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> rootGet() {
         return ResponseEntity.ok().build();
     }
