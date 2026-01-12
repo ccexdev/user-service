@@ -4,7 +4,7 @@ server:
     context-path: /
 spring:
   application:
-    name: userservice
+    name: user-service
   jpa:
     database: postgresql
     show-sql: true
@@ -24,3 +24,14 @@ logging:
     org:
       hibernate:
         SQL: debug
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    hostname: user-service
+    ip-address: user-service

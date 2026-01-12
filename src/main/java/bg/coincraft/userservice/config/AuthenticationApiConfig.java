@@ -4,6 +4,7 @@ import bg.coincraft.authenticationservice.client.ApiClient;
 import org.openapitools.client.api.AuthenticationApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
@@ -19,6 +20,7 @@ public class AuthenticationApiConfig {
      * Create RestTemplate with interceptors and buffering
      */
     @Bean
+    @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         RestTemplate restTemplate = builder.build();
 
