@@ -7,7 +7,7 @@ spring:
     activate:
       on-profile: local
   application:
-    name: userservice
+    name: user-service
   jpa:
     database: postgresql
     show-sql: true
@@ -35,6 +35,25 @@ logging:
       springframework:
         security: trace
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: false
+    hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
 services:
   authentication:
-    url: http://localhost:8082
+    url: http://AUTHENTICATION-SERVICE
