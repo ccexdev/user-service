@@ -12,7 +12,7 @@ spring:
     database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   datasource:
     url: jdbc:postgresql://localhost:5432/user_service
     username: admin
@@ -20,8 +20,14 @@ spring:
     driverClassName: org.postgresql.Driver
   sql:
     init:
-      mode: always
       encoding: utf-8
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    schemas: public
+    validate-on-migrate: true
+    baseline-version: 1
   security:
     oauth2:
       resourceserver:
