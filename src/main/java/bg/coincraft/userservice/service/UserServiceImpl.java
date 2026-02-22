@@ -4,6 +4,8 @@ import bg.coincraft.authenticationservice.client.model.UserDTO;
 import bg.coincraft.userservice.exception.ConstraintViolationException;
 import bg.coincraft.userservice.model.CreateUserDTO;
 import bg.coincraft.userservice.model.db.UserEntity;
+import bg.coincraft.userservice.model.db.UserProfileEntity;
+import bg.coincraft.userservice.model.enums.GenderEnum;
 import bg.coincraft.userservice.model.enums.UserRole;
 import bg.coincraft.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,12 +38,28 @@ public class UserServiceImpl implements UserService {
                 .setUsername(createUserDTO.getUsername())
                 .setFirstName(createUserDTO.getFirstName())
                 .setLastName(createUserDTO.getLastName())
-                .setEmail(createUserDTO.getEmail())
-                .setActive(true)
-                .setCreatedAt(LocalDateTime.now())
-                .setRole(UserRole.USER)
                 .setKeycloakId(keycloakUserId)
+                .setEmail(createUserDTO.getEmail())
+                .setIsEmailVerified(false)
+                .setPhoneNumber(createUserDTO.getPhoneNumber())
+                .setActive(false)
+                .setCreatedAt(LocalDateTime.now())
+                .setCreatedBy("SYSTEM")
+                .setRole(UserRole.USER)
                 .build();
+
+        UserProfileEntity userProfileEntity = UserProfileEntity.builder()
+                .setUserEntity(user)
+                .setCountryCode(createUserDTO.getProfile().getCountryCode())
+                .setDateOfBirth(createUserDTO.getProfile().getDateOfBirth())
+                .setGender(GenderEnum.valueOf(createUserDTO.getProfile().getGender().name()))
+                .setAddress(createUserDTO.getProfile().getAddress())
+                .setCity(createUserDTO.getProfile().getCity())
+                .setPostalCode(createUserDTO.getProfile().getPostalCode())
+                .setCountry(createUserDTO.getProfile().getCountry())
+                .build();
+
+        user.setUserProfileEntity(userProfileEntity);
 
         this.userRepository.save(user);
     }

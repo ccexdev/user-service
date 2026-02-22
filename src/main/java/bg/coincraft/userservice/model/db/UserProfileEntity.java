@@ -18,11 +18,11 @@ import java.time.LocalDate;
 public class UserProfileEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_profile_seq")
-    @SequenceGenerator(name = "user_profile_seq", sequenceName = "user_profile_sequence", allocationSize = 1)
-    @ToString.Exclude
+    @Column(name = "user_id")
     private Long id;
 
+    @ToString.Exclude
+    @MapsId
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private UserEntity userEntity;
