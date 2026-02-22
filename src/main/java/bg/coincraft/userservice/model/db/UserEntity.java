@@ -32,22 +32,49 @@ public class UserEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String keycloakId;
 
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column
+    private boolean isEmailVerified;
+
+    @Column
+    private LocalDateTime emailVerifiedAt;
+
+    @Column
+    private String emailVerificationToken;
+
+    @Column
+    private LocalDateTime emailVerificationTokenExpiresAt;
+
+    @Column(unique = true, nullable = false)
+    private String phoneNumber;
+
     @Column(nullable = false)
     private boolean active;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private String createdBy;
+
+    @Column
+    private String updatedBy;
 
     @Column
     private LocalDateTime lastLoginAt;
 
-    @Column
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserProfileEntity userProfileEntity;
+
+    @Column(nullable = false)
     @Convert(converter = UserRoleConverter.class)
     private UserRole role;
 }
